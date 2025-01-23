@@ -94,6 +94,64 @@ public class Model extends Observable {
         setChanged();
     }
 
+    /**
+     * return the row which the tile can arrive
+     */
+    private int findEqual(int col, int row){
+        Tile after_tile;
+        int value = board.tile(col,row).value();
+        int target_row;
+
+
+        for (target_row = row - 1;target_row >=0; target_row --){
+            after_tile = board.tile(col, target_row);
+            if (after_tile == null){continue;}
+            if (after_tile.value() != value){break;}
+            if (after_tile.value() == value){return target_row;}
+        }
+        return row;
+    }
+
+    private int nonEmpty(int col,int row){
+        int i;
+        for (i = row - 1;i >= 0;i --){
+            if (board.tile(col, i) != null){return i;}
+        }
+        return i;
+    }
+
+    /**
+     * handle the logic of tiles move on one column
+     * return true if tiles on one column changed
+     */
+    private boolean tileMove(int col){
+        int size = board.size();
+        boolean changed = false;
+        int target_row;
+        Tile t;
+
+        for(int row = size - 1;row >= 0; row--){
+            t = board.tile(col, row);
+            if (t == null){
+                target_row = nonEmpty(col, row);
+                if (target_row >= 0){
+                    changed = true;
+                    board.move(col, row, board.tile(col,target_row));
+                    row ++;
+                }
+            }else {
+                target_row = findEqual(col, row);
+                if (target_row != row) {
+                    changed = true;
+                    score += 2 * board.tile(col, row).value();
+                    board.move(col, row, board.tile(col, target_row));
+                }
+            }
+        }
+        return changed;
+    }
+
+
     /** Tilt the board toward SIDE. Return true iff this changes the board.
      *
      * 1. If two Tile objects are adjacent in the direction of motion and have
@@ -109,10 +167,17 @@ public class Model extends Observable {
     public boolean tilt(Side side) {
         boolean changed;
         changed = false;
+        int size = board.size();
 
         // TODO: Modify this.board (and perhaps this.score) to account
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
+
+        board.setViewingPerspective(side);
+        for (int col = 0; col < size; col ++){
+            if (tileMove(col)){changed = true;}
+        }
+        board.setViewingPerspective(Side.NORTH);
 
         checkGameOver();
         if (changed) {
@@ -138,6 +203,12 @@ public class Model extends Observable {
      * */
     public static boolean emptySpaceExists(Board b) {
         // TODO: Fill in this function.
+        int size = b.size();
+        for(int row = 0; row < size; row++){
+            for(int col = 0; col < size; col++) {
+                if (b.tile(col, row) == null) {return true;}
+            }
+        }
         return false;
     }
 
@@ -148,6 +219,34 @@ public class Model extends Observable {
      */
     public static boolean maxTileExists(Board b) {
         // TODO: Fill in this function.
+        int size = b.size();
+        for(int row = 0; row < size; row++){
+            for(int col = 0; col < size; col++) {
+                Tile tile = b.tile(col, row);
+                if ( tile != null && tile.value() == MAX_PIECE) {return true;}
+            }
+        }
+        return false;
+    }
+
+    /**
+     * return true if there are two adjacent tiles with the same value
+     */
+    public static boolean withSameValue(Board b,int col,int row){
+
+        int size = b.size();
+        int[] dr = {-1, 1, 0, 0};
+        int[] dc = {0, 0, -1, 1};
+        int cur_value = b.tile(col, row).value();
+        Tile around_tile;
+
+        for(int i = 0; i < 4; i++){
+            int c = col + dc[i],r = row + dr[i];
+            if(c < 0 || c >= size || r < 0 || r >= size){continue;}
+            around_tile = b.tile(c, r);
+            if(around_tile == null){continue;}
+            if(around_tile.value() == cur_value){return true;}
+        }
         return false;
     }
 
@@ -159,6 +258,13 @@ public class Model extends Observable {
      */
     public static boolean atLeastOneMoveExists(Board b) {
         // TODO: Fill in this function.
+        int size = b.size();
+        if(emptySpaceExists(b)){return true;}
+        for(int row = 0; row < size; row++){
+            for(int col = 0; col < size; col++){
+                if(withSameValue(b, col, row)){return true;}
+            }
+        }
         return false;
     }
 
