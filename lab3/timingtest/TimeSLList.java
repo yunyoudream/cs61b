@@ -31,7 +31,7 @@ public class TimeSLList {
         int M = 1000;
 
         int i = 1;
-        while (i <= 64000) {
+        while (i <= 128000) {
             test.addLast(i);
 
             if (i == step) {
