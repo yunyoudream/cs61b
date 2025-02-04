@@ -43,4 +43,12 @@ public class MyDequesTest {
             }
         }
     }
+
+    @Test
+    public void removeEmptyTest() {
+        ArrayDeque<Integer> aq = new ArrayDeque<>();
+        aq.removeFirst();
+        aq.removeLast();
+        System.out.println(aq.size());
+    }
 }
