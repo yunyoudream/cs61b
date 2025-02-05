@@ -51,4 +51,28 @@ public class MyDequesTest {
         aq.removeLast();
         System.out.println(aq.size());
     }
+    @Test
+    public void TestEqual() {
+//        LinkedListDeque<Integer> lq1 = new LinkedListDeque<>();
+//        LinkedListDeque<Integer> lq2 = new LinkedListDeque<>();
+//
+//        lq1.addLast(1);
+//        lq2.addLast(1);
+//        assertTrue(lq1.equals(lq2));
+//        assertTrue(lq1.equals(lq1));
+//
+//        lq1.addLast(2);
+//        assertFalse(lq1.equals(lq2));
+
+        ArrayDeque<Integer> lq1 = new ArrayDeque<>();
+        ArrayDeque<Integer> lq2 = new ArrayDeque<>();
+
+        lq1.addLast(1);
+        lq2.addLast(1);
+        assertTrue(lq1.equals(lq2));
+        assertTrue(lq1.equals(lq1));
+
+        lq1.addLast(2);
+        assertFalse(lq1.equals(lq2));
+    }
 }
