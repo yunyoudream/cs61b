@@ -36,13 +36,12 @@ public class MaxArrayDeque<T> extends ArrayDeque<T> {
     public boolean equals(Object o) {
         if (o == this) { return true; }
         if (o == null) { return false; }
-        if (o instanceof ArrayDeque) {
-            ArrayDeque<T> other = (ArrayDeque<T>) o;
+        if (o instanceof Deque) {
+            Deque<T> other = (Deque<T>) o;
             if (other.size() != this.size()) { return false; }
-            Iterator<T> i = other.iterator();
-            Iterator<T> ti = this.iterator();
-            while (i.hasNext()) {
-                if (i.next() != ti.next()) { return false; }
+
+            for (int i = 0; i < this.size(); i ++) {
+                if (!other.get(i).equals(this.get(i))) { return false; }
             }
             return true;
         }

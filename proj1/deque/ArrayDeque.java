@@ -128,13 +128,12 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     public boolean equals(Object o) {
         if (this == o) { return true; }
         if (o == null) { return false; }
-        if (o instanceof ArrayDeque) {
-            ArrayDeque<T> other = (ArrayDeque<T>) o;
-            if (other.size != this.size) { return false; }
-            int pos = (nextFirst + 1) % items.length;
-            for (T item : other) {
-                if (!item.equals(items[pos])) { return false; }
-                pos = (pos + 1) % items.length;
+        if (o instanceof Deque) {
+            Deque<T> other = (Deque<T>) o;
+            if (other.size() != this.size()) { return false; }
+
+            for (int i = 0; i < this.size(); i ++) {
+                if (!other.get(i).equals(this.get(i))) { return false; }
             }
             return true;
         }
