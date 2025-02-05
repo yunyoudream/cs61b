@@ -29,7 +29,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private void resizing(int capacity) {
         T[] t = (T[]) new Object[capacity];
         int first = (nextFirst + 1) % items.length;
-        for (int pos = 0; pos < this.size; pos ++) {
+        for (int pos = 0; pos < this.size; pos++) {
             t[pos] = items[first];
             first = (first + 1) % items.length;
         }
@@ -132,7 +132,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             Deque<T> other = (Deque<T>) o;
             if (other.size() != this.size()) { return false; }
 
-            for (int i = 0; i < this.size(); i ++) {
+            for (int i = 0; i < this.size(); i++) {
                 if (!other.get(i).equals(this.get(i))) { return false; }
             }
             return true;

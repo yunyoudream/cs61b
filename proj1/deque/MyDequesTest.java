@@ -27,17 +27,17 @@ public class MyDequesTest {
             } else if (operationNumber == 3) {
                 assertEquals(lq.isEmpty(), aq.isEmpty());
             } else if (operationNumber == 4) {
-                if(lq.isEmpty()) { continue; }
+                if (lq.isEmpty()) { continue; }
                 int lqVal = lq.removeFirst();
                 int aqVal = aq.removeFirst();
                 assertEquals(lqVal, aqVal);
             } else if (operationNumber == 5) {
-                if(lq.isEmpty()) { continue; }
+                if (lq.isEmpty()) { continue; }
                 int lqVal = lq.removeLast();
                 int aqVal = aq.removeLast();
                 assertEquals(lqVal, aqVal);
             } else if (operationNumber == 6) {
-                if(lq.isEmpty()) { continue; }
+                if (lq.isEmpty()) { continue; }
                 int index = lq.size() - 1;
                 assertEquals(lq.get(index), aq.get(index));
             }
@@ -52,7 +52,7 @@ public class MyDequesTest {
         System.out.println(aq.size());
     }
     @Test
-    public void TestEqual() {
+    public void testEqual() {
 //        LinkedListDeque<Integer> lq1 = new LinkedListDeque<>();
 //        LinkedListDeque<Integer> lq2 = new LinkedListDeque<>();
 //
