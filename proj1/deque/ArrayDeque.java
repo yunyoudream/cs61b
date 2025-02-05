@@ -48,10 +48,6 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         this.size += 1;
     }
 
-    @Override
-    public boolean isEmpty() {
-        return this.size == 0;
-    }
 
     @Override
     public int size() {
@@ -124,6 +120,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         public T next() {
             T returnItem = items[first];
             first = (first + 1) % items.length;
+            total += 1;
             return returnItem;
         }
     }
